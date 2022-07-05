@@ -1,17 +1,13 @@
 package com.bchmsl.homework7
 
-import android.graphics.Color
-import android.graphics.ColorFilter
 import android.os.Bundle
 import android.text.InputType
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginStart
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.bchmsl.homework7.databinding.ActivityMainBinding
@@ -26,20 +22,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        makeDialog()
         listeners()
     }
-
-
 
     private fun listeners() {
         binding.btnAddField.setOnClickListener {
             makeDialog()
         }
+
     }
 
     private fun makeDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Title")
+        builder.setTitle("New EditText")
 
         val dialogLinearLayout = LinearLayout(this)
         val dialogLinearLayoutParams = LinearLayout.LayoutParams(
@@ -50,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         dialogLinearLayout.layoutParams = dialogLinearLayoutParams
         builder.setView(dialogLinearLayout)
 
-        val input = EditText(this)
+        val input = AppCompatEditText(this)
         input.hint = "Enter Text"
         input.inputType = InputType.TYPE_CLASS_TEXT
         dialogLinearLayout.addView(input)
@@ -71,18 +67,19 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun makeEditText(hint: String, isNumeric: Boolean) {
-        val editText = EditText(this@MainActivity)
+        val editText = AppCompatEditText(this@MainActivity)
         editText.hint = hint
         when (isNumeric) {
             true -> editText.inputType = InputType.TYPE_CLASS_NUMBER
             false -> editText.inputType = InputType.TYPE_CLASS_TEXT
         }
-        val etLayoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+        val etLayoutParams = ViewGroup.MarginLayoutParams(
+            ViewGroup.MarginLayoutParams.MATCH_PARENT,
+            ViewGroup.MarginLayoutParams.WRAP_CONTENT
         )
-        
+        etLayoutParams.setMargins(10)
         editText.layoutParams = etLayoutParams
+
 
         editText.setPadding(30)
         editText.setBackgroundResource(R.drawable.rectangle)
